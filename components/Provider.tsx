@@ -1,8 +1,18 @@
-import React from 'react'
+"use client"
+import React, { ReactNode } from 'react'
+import { SessionProvider } from 'next-auth/react'
+import { Session } from 'next-auth';
 
-const Provider = () => {
+interface RootLayoutProps {
+  children: ReactNode;
+  session: Session | null;
+}
+
+const Provider = ({ children, session}: RootLayoutProps) => {
   return (
-    <div>Provider</div>
+    <SessionProvider session={session}>
+      {children}
+    </SessionProvider>
   )
 }
 

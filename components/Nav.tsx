@@ -8,11 +8,12 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
     const isUserLogged = true;
+    const [toggleDropdown , setToggleDropwdown] = useState(false)
     const [providers, setProviders] = useState(null)
 
     useEffect(() => {
         (async () => {
-          const response = await getProviders();
+          const response = await getProviders() as any;
           setProviders(response);
         })();
       }, []);
@@ -40,7 +41,7 @@ const Nav = () => {
                         Create Post
                     </Link>
 
-                    <button type="button" onClick={signOut} className="outline_btn">
+                    <button type="button" onClick={() => signOut} className="outline_btn">
                         Sign Out
                     </button>
 
@@ -51,13 +52,43 @@ const Nav = () => {
                             height={37}
                             className="rounded-full"
                             alt="profile"
+                            onClick={() => setToggleDropwdown((prev) => !prev)}
                         />
                     </Link>
+
+                    {toggleDropdown && (
+                        <div className="dropdown">
+                            <Link
+                                href="/profile"
+                                className="dropdown_link"
+                                onClick={() => setToggleDropwdown(false )}
+                            >
+                                My Profile
+                            </Link>
+                            <Link
+                                href="/create-prompt"
+                                className="dropdown_link"
+                                onClick={() => setToggleDropwdown(false )}
+                            >
+                                Create Prompt
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setToggleDropwdown(false);
+                                    signOut();
+                                }}
+                                className="mt-5 w-full black_btn"
+                            >
+                                Sign Out
+                            </button>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <>
                     {providers && 
-                        Object.values(providers).map((provider) => (
+                        Object.values(providers).map((provider: any) => (
                             <button 
                                 type="button"
                                 key={provider.name}

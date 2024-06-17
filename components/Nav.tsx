@@ -7,7 +7,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 
 const Nav = () => {
-    const isUserLogged = true;
+    const { data: session} = useSession();
     const [toggleDropdown , setToggleDropwdown] = useState(false)
     const [providers, setProviders] = useState(null)
 
@@ -35,7 +35,7 @@ const Nav = () => {
 
         {/* Desktop Navigation */ }
         <div className="sm:flex hidden">
-            {isUserLogged ? (
+            {session?.user ? (
                 <div className="flex gap-3 md:gap-5">
                     <Link className="black_btn" href="/create-prompt">
                         Create Post
@@ -47,7 +47,7 @@ const Nav = () => {
 
                     <Link href="/profile">
                         <Image
-                            src="/assets/images/logo.svg"
+                            src={session?.user?.image as string}
                             width={37}
                             height={37}
                             className="rounded-full"

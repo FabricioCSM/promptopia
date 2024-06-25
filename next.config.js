@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  appDir: true,
-  serverComponentsExternalPackages: ["mongoose"],
   images: {
     domains: ['lh3.googleusercontent.com'],
   },
@@ -16,4 +14,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
